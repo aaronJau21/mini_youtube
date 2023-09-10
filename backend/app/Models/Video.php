@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\VideosStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,8 @@ class Video extends Model
         'image',
         'video_path'
     ];
+
+    protected $casts = ['status' => VideosStatusEnum::class];
 
     // One to Many
     public function comments()

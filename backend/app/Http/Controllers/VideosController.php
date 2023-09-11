@@ -11,7 +11,27 @@ use Illuminate\Support\Facades\Storage;
 
 class VideosController extends Controller
 {
-    public function video(VideoRequest $request)
+
+    public function index()
+    {
+        $videos = Video::all();
+
+        return response()->json([
+            'mensaje' => 'Todos los videos',
+            'videos' => $videos
+        ]);
+    }
+
+    public function paginateVideo()
+    {
+        $videos = Video::paginate(1);
+        return response()->json([
+            'mensaje' => 'Pagina 1',
+            'videos' => $videos
+        ]);
+    }
+
+    public function saveVideo(VideoRequest $request)
     {
         $user = Auth::user();
 
@@ -38,6 +58,21 @@ class VideosController extends Controller
 
         return response()->json([
             'video' => $video
+        ]);
+    }
+
+    public function getVideoId($video_id)
+    {
+        $video = Video::find($video_id);
+
+        if (!$video) {
+            return response()->json([
+                'video' => 'No Video'
+            ]);
+        }
+
+        return response()->json([
+            'Video' => $video
         ]);
     }
 }

@@ -3,8 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\VideosController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +20,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::get('/videos', [VideosController::class, 'index']);
+    Route::get('/paginate-videos', [VideosController::class, 'paginateVideo']);
+    Route::post('/create-video', [VideosController::class, 'saveVideo']);
+    Route::get('/video/{id}', [VideosController::class, 'getVideoId']);
+
+    Route::post('/comments', [CommentsController::class, 'store']);
+    Route::delete('/delete-comments/{id}', [CommentsController::class, 'deleteComments']);
+
     Route::post('/logout', [LogoutController::class, 'logout']);
-    Route::post('/videos', [VideosController::class, 'video']);
 });
 
 Route::post('/register', [RegisterController::class, 'register']);
